@@ -30,7 +30,7 @@ Then invoke it with `frontier-ui-forge` when asking for a premium, distinctive, 
 
 ## Example
 
-Open [`skill/examples/atlas-incident-console/index.html`](skill/examples/atlas-incident-console/index.html) for a complete incident-triage workspace with an evidence timeline, containment action, audit trail, responsive layout, focus styles, reduced-motion support, and a real interaction state.
+Open [`skill/examples/atlas-incident-console/index.html`](skill/examples/atlas-incident-console/index.html) for a compact incident-triage fixture with synthetic-data labeling, an evidence timeline, containment and snooze actions, navigation/search feedback, an audit trail, responsive layout, focus styles, and reduced-motion support. It is a runnable example, not a claim of complete production state coverage; the Skill still requires each real project to cover its applicable loading, empty, error, permission, and recovery states.
 
 Open [`skill/examples/atlas-incident-console/directions.html`](skill/examples/atlas-incident-console/directions.html) to see the direction-comparison gate that precedes implementation.
 
@@ -39,6 +39,8 @@ Run the deterministic pass:
 ```bash
 python3 skill/scripts/verify_frontier_ui.py skill/examples/atlas-incident-console
 ```
+
+The verifier is intentionally narrow and warning-oriented. It complements browser, accessibility, product-truth, and framework checks; it does not replace them.
 
 ## Repository layout
 

@@ -98,7 +98,7 @@ Keep subjective design judgment separate from mechanical evidence.
 
 Design review scores 0 to 10 for task fit, hierarchy, distinctiveness, coherence, content truth, state quality, responsive behavior, and emotional fit. List two strengths and three to five highest-impact changes.
 
-Evidence review reports concrete findings with viewport, selector or file location, impact, and repair. Run static checks for missing labels, removed focus outlines, placeholder links, raw colors outside tokens, transition-all, unsafe fixed widths, tiny touch targets, and fabricated copy.
+Evidence review reports concrete findings with viewport, selector or file location, impact, and repair. The bundled static pass checks transition-all, dynamic viewport fallbacks, image alt attributes, raw colors outside token declarations, focus-visible, and reduced motion. Use the project's own lint, accessibility, browser, and content checks for labels, links, fixed widths, touch targets, and product truth.
 
 The final score is not a vanity number. Any score below 8 needs a repair or a written reason. Stop after three repair rounds or when the last round produces no evidence-backed improvement.
 
@@ -120,7 +120,7 @@ Do not report “polished” without rendered evidence. Do not report “accessi
 
 Read references/framework-adapters.md when the project uses a named framework or component library. Read references/quality-gates.md when designing the review score or writing verification output. Read references/direction-matrix.md when the brief is open or the first concepts are too similar. Read references/example-brief.md for a complete example.
 
-Use scripts/verify_frontier_ui.py for a deterministic static pass when the deliverable is HTML, CSS, or JS. It is a warning system, not a substitute for a real browser or a WCAG audit.
+Use `<skill-root>/scripts/verify_frontier_ui.py` for a deterministic static pass when the deliverable is HTML, CSS, or JS. When working from the skill directory, this is `python3 scripts/verify_frontier_ui.py <path>`. It is a warning system, not a substitute for a real browser or a WCAG audit.
 
 ## Failure modes
 

@@ -17,6 +17,15 @@ def files_for(root: Path) -> list[Path]:
     return [p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in suffixes and "node_modules" not in p.parts]
 
 
+def raw_color_lines(text: str) -> list[int]:
+    """Return lines with literal colors outside CSS custom-property declarations."""
+    hits: list[int] = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        if COLOR_RE.search(line) and not re.search(r"--[\w-]+\s*:", line):
+            hits.append(number)
+    return hits
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run a small warning-only Frontier UI static pass")
     parser.add_argument("path", type=Path)
@@ -35,7 +44,7 @@ def main() -> int:
         label = str(path)
         if "transition: all" in lowered or "transition-all" in lowered:
             warnings.append(f"{label}: avoid transition: all; enumerate cheap properties")
-        if "100vh" in lowered and "100dvh" not in lowered:
+        if "100vh" in lowered and not re.search(r"100dvh|100svh|100lvh", lowered):
             warnings.append(f"{label}: 100vh found without a dynamic viewport fallback")
         if path.suffix.lower() in {".html", ".htm"}:
             for img in IMG_RE.findall(text):
@@ -43,8 +52,8 @@ def main() -> int:
                     warnings.append(f"{label}: image is missing alt text")
         if EMOJI_RE.search(text):
             warnings.append(f"{label}: emoji glyph found; confirm it is an intentional product choice")
-        if COLOR_RE.search(text) and "--" not in text:
-            warnings.append(f"{label}: raw color literal found without a visible token declaration")
+        for line_number in raw_color_lines(text):
+            warnings.append(f"{label}:{line_number}: raw color literal found outside a token declaration")
 
     if not FOCUS_RE.search(combined):
         warnings.append("project: no :focus-visible/:focus rule found")
